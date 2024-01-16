@@ -5,6 +5,7 @@
  */
 import Joi from 'joi'
 import { StatusCodes } from 'http-status-codes'
+import ApiError from '~/utils/ApiError'
 
 const createNew = async (req, res, next) => {
   const corectCondition = Joi.object({
@@ -18,11 +19,10 @@ const createNew = async (req, res, next) => {
     // Nếu không có lỗi thì next req qua controller
     next()
   } catch (error) {
-    // console.log(error)
-    // console.log(new Error(error))
-    res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({
-      error: new Error(error).message
-    })
+
+    const errorMessage = new Error(error).message
+    next(new ApiError(StatusCodes.UNPROCESSABLE_ENTITY, errorMessage))
+
   }
 }
 
