@@ -13,9 +13,11 @@ const createNew = async (reqBody) => {
       ...reqBody
     }
 
-    const createdColumn = await columnModel.createNew(newColumn)
+    // Kết quả của hàm createNew trong model sẽ trả về thông báo insert thành công hoặc thất bại của mongoDB
+    const result_createdColumn = await columnModel.createNew(newColumn)
 
-    const getNewColumn = await columnModel.findOneById(createdColumn.insertedId)
+    // Query column vừa mới created để trả về cho API
+    const getNewColumn = await columnModel.findOneById(result_createdColumn.insertedId)
 
     if (getNewColumn) {
       // Xử lý cấu trúc data
