@@ -29,10 +29,18 @@ const START_SERVER = () => {
   // MiddleWare xử lý lỗi tập trung
   app.use(errorHandlingMiddleware)
 
-
-  app.listen(env.APP_PORT, env.APP_HOST, () => {
-    console.log(`3. Hello ${env.AUTHOR}, I am running at ${ env.APP_HOST }:${ env.APP_PORT }/`)
-  })
+  if (env.BUILD_MODE === 'production') {
+    // môi trường production ( đang support cho render.com)
+    app.listen(process.env.PORT, () => {
+      console.log(`3. Production Hello ${env.AUTHOR}, I am running at port ${ process.env.PORT }`)
+    })
+  }
+  else {
+    // môi trường local dev
+    app.listen(env.LOCAL_DEV_APP_PORT, env.LOCAL_DEV_APP_HOST, () => {
+      console.log(`3. Local DEV Hello ${env.AUTHOR}, I am running at host ${ env.LOCAL_DEV_APP_HOST }:${ env.LOCAL_DEV_APP_PORT }/`)
+    })
+  }
 
   exitHook(() => {
     console.log('4. Disconnecting from MongoDB Cloud Atlas')
