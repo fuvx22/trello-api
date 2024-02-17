@@ -6,7 +6,8 @@
 
 // Những domain được phép truy cập vào server
 export const WHITELIST_DOMAINS = [
-  'http://localhost:5173'
+  // Không cần cho phép local nữa vì mode dev là cho qua luôn
+  // 'http://localhost:5173'
 ]
 
 export const BOARD_TYPE = {
