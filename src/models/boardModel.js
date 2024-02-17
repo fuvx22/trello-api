@@ -78,6 +78,19 @@ const pushColumnOrderIds = async ( column ) => {
   } catch (error) { throw new Error(error) }
 }
 
+// Dùng $pull để lấy 1 phần tử trong 1 mảng rồi xóa nó đi
+const pullColumnOrderIds = async ( column ) => {
+  try {
+    const result = await GET_DB().collection(BOARD_COLLECTION_NAME).findOneAndUpdate(
+      { _id: new ObjectId(column.boardId) },
+      { $pull: { columnOrderIds: new ObjectId(column._id) } },
+      { returnDocument: 'after' }
+    )
+
+    return result
+  } catch (error) { throw new Error(error) }
+}
+
 const validateBeforeCreate = async (data) => {
   return await BOARD_COLLECTION_SCHEMA.validateAsync(data, { abortEarly: false })
 }
@@ -121,5 +134,6 @@ export const boardModel = {
   findOneById,
   getDetails,
   pushColumnOrderIds,
-  update
+  update,
+  pullColumnOrderIds
 }
