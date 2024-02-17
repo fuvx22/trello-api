@@ -8,6 +8,7 @@
 export const WHITELIST_DOMAINS = [
   // Không cần cho phép local nữa vì mode dev là cho qua luôn
   // 'http://localhost:5173'
+  'https://trello-web-mocha.vercel.app'
 ]
 
 export const BOARD_TYPE = {
